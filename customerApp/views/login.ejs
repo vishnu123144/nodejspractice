@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      doLogin = function(){
+        if($("#username").val() != ""){
+          var loginData = {};
+          loginData.username = $('#username').val();
+          loginData.password = $('#password').val();
+          $.ajax({url: "/users/authenticate",method:'POST', 
+            data:loginData,
+            success: function(response){
+              if(response.result =="success"){
+                location = "/customer";
+              }else{
+                alert(response.msg);
+              }
+            }});
+        }else{
+          alert("Username / Password cannot be blank ");
+        }
+      }
+    </script>
+    <h1><%= title %></h1>
+    <form>
+        <input value="admin" id="username" placeholder="username" /> <br/><br/>
+        <input value="admin" id="password" placeholder="password" /> <br/><br/>
+        <input value="Login" type="button" onclick="doLogin()"/> <br/>
+    </form>
+  </body>
+</html>
